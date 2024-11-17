@@ -2,3 +2,4 @@ joblib==1.4.2
 pandas==2.2.3
 streamlit==1.39.0
 Scikit-learn==1.5.2
+imbalanced-learn==0.12.3
