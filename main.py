@@ -1,6 +1,4 @@
 import streamlit as st
-from sympy.stats.rv import probability
-
 from prediction_helper import predict
 
 st.title('Credit Risk Modeling')
@@ -17,17 +15,17 @@ with row1[1]:
 with row1[2]:
     loan_amount = st.number_input('Loan Amount',min_value=0, value=20000000,step=1)
 
+
 # Calculate Loan to Income Ratio and display it
 loan_to_income_ratio=loan_amount/income if income>0 else 0
 with row2[0]:
     st.text('Loan to Income Ratio:')
     st.text(f'{loan_to_income_ratio:.2f}') #Display as text field
-
-# Assign inputs to the remaining controls
 with row2[1]:
     loan_tenure_months = st.number_input('Loan Tenure (months)', min_value=0, step=1, value=36)
 with row2[2]:
     avg_dpd_per_delinquency = st.number_input('Avg DPD', min_value=0, value=20)
+
 
 with row3[0]:
     delinquency_ratio = st.number_input('Delinquency Ratio', min_value=0, max_value=100, step=1, value=30)
@@ -46,17 +44,12 @@ with row4[2]:
 
 
 
-    if st.button('Calculate Risk'):
-        # Call the predict function from the helper module
-        # print((age, income, loan_amount, loan_tenure_months, avg_dpd_per_delinquency,
-        #                                             delinquency_ratio, credit_utilization_ratio, num_open_accounts,
-        #                                            residence_type, loan_purpose, loan_type))
-
-        probability,credit_score, rating = predict(age, residence_type, loan_purpose, loan_type,
+if st.button('Calculate Risk'):
+    probability, credit_score, rating = predict(age, residence_type, loan_purpose, loan_type,
                loan_tenure_months, num_open_accounts,credit_utilization_ratio,
                loan_to_income_ratio, delinquency_ratio, avg_dpd_per_delinquency)
 
     # Display the results
-    st.write(f"Deafult Probability: {probability:}")
+    st.write(f"Default Probability: {probability:.2%}")
     st.write(f"Credit Score: {credit_score}")
     st.write(f"Rating: {rating}")
